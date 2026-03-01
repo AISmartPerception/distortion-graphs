@@ -1,2 +1,3 @@
-# distortion-graphs
-The official implementation of "Panoptic Pairwise Distortion Graph" Paper Accepted at ICLR 2026
+# Panoptic Pairwise Distortion Graph [ICLR 2026] ✨
+
+This is the official implementation of the paper titled "Panoptic Pairwise Distortion Graph" accepted at ICLR 2026.
