@@ -32,40 +32,6 @@ The core idea is to represent comparative image quality as a structured graph ov
 
 ---
 
-## Environment
-
-This project is implemented in Python with PyTorch and uses the following libraries directly in the uploaded code:
-
-- `torch`
-- `torchvision`-style tensor ops
-- `deepspeed`
-- `torchmetrics`
-- `albumentations`
-- `pycocotools`
-- `einops`
-- `Pillow`
-- `scipy`
-- `scikit-learn`
-- `graphviz`
-- `tensorboard`
-- `PyYAML`
-- `opencv-python`
-- `tqdm`
-
-A minimal setup looks like this:
-
-```bash
-conda create -n distortion-graph python=3.10 -y
-conda activate distortion-graph
-
-pip install torch torchvision torchaudio
-pip install deepspeed torchmetrics albumentations pycocotools einops pillow scipy scikit-learn graphviz tensorboard pyyaml opencv-python tqdm
-```
-
-If you want to render graph PNGs with `plot_graph.py`, install the **Graphviz system package** as well, not just the Python binding.
-
----
-
 ## Data layout
 
 The default configuration expects the dataset under:
