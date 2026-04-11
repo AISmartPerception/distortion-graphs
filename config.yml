@@ -1,0 +1,57 @@
+general:
+    seed: 1234
+    device: 0
+    datapath: "data/pandabench/"
+    stats:
+        mixed: "data/pandabench/stats/train_stats_mixed.json"
+        snow: "data/pandabench/stats/train_stats_snow.json", 
+        brightness: "data/pandabench/stats/train_stats_brightness.json", 
+        contrast_inc: "data/pandabench/stats/train_stats_contrast_inc.json", 
+        contrast_dec: "data/pandabench/stats/train_stats_contrast_dec.json", 
+        compression: "data/pandabench/stats/train_stats_compression.json", 
+        saturate_inc: "data/pandabench/stats/train_stats_saturate_inc.json", 
+        oversharpen: "data/pandabench/stats/train_stats_oversharpen.json", 
+        blur: "data/pandabench/stats/train_stats_blur.json", 
+        noise: "data/pandabench/stats/train_stats_noise.json", 
+        mixed2: "data/pandabench/stats/train_stats_mixed2.json", 
+        haze: "data/pandabench/stats/train_stats_haze.json", 
+        rain: "data/pandabench/stats/train_stats_rain.json", 
+        pixelate: "data/pandabench/stats/train_stats_pixelate.json", 
+        darken: "data/pandabench/stats/train_stats_darken.json", 
+        saturate_dec: "data/pandabench/stats/train_stats_saturate_dec.json"
+        
+    feature_extractor: "dinov2" # "clip", "dinov2", "siglip"
+    feature_extractor_dim: 384 # 384 for dinov2, 768 for siglip
+    resize_shape: 224 # the size has to be divisible by 14 for dinov2
+    patch_size: 14 # dinov2, this is 14 | for siglip/clip, it is 16
+    backbone_ckpt: "dinov2_vits14" # "dinov2_vits14" # "clip-vit-base-patch16" # "google/siglip-base-patch16-224"
+
+train:
+    learning_rate: 1e-4
+    epochs: 30
+    batch_size: 6 # default is 6
+    num_workers: 4
+    save_dir: "ckpts/"
+    weight_decay: 0.01
+    use_scheduler: False
+    min_scheduler_lr: 1e-7
+    # do gradient accumulation?
+    gradient_accumulation: False
+    gradient_accumulation_steps: 1
+    model:
+        num_heads: 4
+        qkv_bias: True
+        expansion_factor: 2.0
+        decoder_transformer_blocks: 4 # 4 is default
+        no_token_mark: 115 # max number of tokens in the pool
+        region_loss_weight: 0.1
+        region_distortion_loss_weight: 1.0
+        region_severity_loss_weight: 0.1
+        score_pred_loss_weight: 1.0
+    validation_epoch: 1
+    save_model_ep: 10
+
+# this is only for inference.py and has nothing to do with train.py
+inference:
+    ckpt: ckpts/model.pth
+    inf_mode: hard # easy, medium, hard -- PandaBench results
