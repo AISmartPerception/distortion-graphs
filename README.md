@@ -1,6 +1,9 @@
 # ✨ Panoptic Pairwise Distortion Graph [ICLR 2026] ✨
 
 Official codebase for **Panoptic Pairwise Distortion Graph**, accepted to **ICLR 2026**.
+<p align="center">
+  <img src="assets/fig00.jpg" alt="Description">
+</p>
 
 ---
 
