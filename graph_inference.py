@@ -45,7 +45,7 @@ def run_inference(model, test_dataloader,
                   device, name_of_exp,
                   batchsize):
 
-    psg_json = load_json("/home/kamran/newvideocode/distortiongraphs/data/psg/psg_annots/psg.json")
+    psg_json = load_json("data/psg/psg_annots/psg.json")
     predicate_classes = psg_json['predicate_classes']
 
     img_id = 0
