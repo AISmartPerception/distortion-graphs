@@ -18,7 +18,7 @@ The core idea is to represent comparative image quality as a structured graph ov
 
 ---
 
-## Repository structure
+## Repository Structure
 
 ```text
 .
@@ -35,7 +35,9 @@ The core idea is to represent comparative image quality as a structured graph ov
 
 ---
 
-## Data layout
+## Data
+
+Download the dataset (~15GB) from: [Data](https://huggingface.co/datasets/kjanjua26/pandabench)
 
 The default configuration expects the dataset under:
 
@@ -50,7 +52,7 @@ with degradation-specific folders plus metadata/statistics JSON files. The confi
 - `train_stats_brightness.json`
 - ...
 
-and swaps `train` → `val` / `test` automatically inside the loader depending on split.  
+and swaps `train` -> `val` / `test` automatically inside the loader depending on split.  
 
 The expected directory pattern is effectively:
 
@@ -85,53 +87,13 @@ data/pandabench/
 
 ---
 
-## Labels and prediction targets
-
-The helper functions define the main label spaces used throughout training and evaluation:
-
-**Distortion classes**
-- `clean`
-- `snow`
-- `contrast_inc`
-- `compression`
-- `brightness`
-- `oversharpen`
-- `noise`
-- `blur`
-- `haze`
-- `rain`
-- `saturate_inc`
-- `saturate_dec`
-- `contrast_dec`
-- `darken`
-- `pixelate`
-
-**Comparison labels**
-- `same`
-- `slightly_worse`
-- `significantly_worse`
-- `slightly_better`
-- `significantly_better`
-
-**Severity labels**
-- `clean`
-- `minor`
-- `moderate`
-- `severe`
-
----
-
 ## Training
 
 Training is launched through `train.py`, which initializes distributed training, builds a DeepSpeed config on the fly, creates an experiment directory under `ckpts/<experiment_name>/`, and logs TensorBoard runs to `runs/<experiment_name>/`. 
 
-### Single-node multi-GPU training
-
 ```bash
 torch --standalone --nproc_per_node=8 train.py --name "pandadg_run01" --configpath config.yml
 ```
-
-### What gets logged
 
 During training / validation / test, the code tracks metrics such as:
 
@@ -145,29 +107,11 @@ Note: These metrics are just signals of training progressing and are not the met
 
 ### Checkpoints
 
-Checkpoints are saved to:
-
-```text
-ckpts/<experiment_name>/
-```
-
-with periodic saves like:
-
-```text
-ep_10.pth
-```
-
-and a final checkpoint like:
-
-```text
-final_ep_<N>.pth
-``` 
-
-Each checkpoint stores epoch, model state, optimizer state, and loss. 
+Checkpoints are saved to: `ckpts/<experiment_name>/`, with periodic saves like: `ep_10.pth` (control the saving epochs in config) and a final checkpoint like: `final_ep_<N>.pth`. Each checkpoint stores epoch, model state, optimizer state, and loss. 
 
 ---
 
-## Standard evaluation
+## Inference
 
 Use `non_graph_inference.py` to run evaluation and print numeric metrics. These are the metrics reported/used.
 
@@ -179,7 +123,7 @@ This script loads the configured checkpoint, runs inference on the test split. D
 
 ---
 
-## Graph export inference
+## Graph Export
 
 Use `graph_inference.py` to convert model predictions into structured distortion graph JSON files.
 
@@ -199,7 +143,7 @@ with filenames of the form:
 <idx>_<img_tag>_<anchor_deg>_<target_deg>_<experiment_name>.json
 ``` 
 
-### Graph schema
+### Graph Schema
 
 The exported JSON uses four top-level fields:
 
@@ -217,7 +161,7 @@ Conceptually:
 
 ---
 
-## Visualizing saved graphs
+## Visualization
 
 After exporting graph JSON files, you can render them with Graphviz using `plot_graph.py`.
 
