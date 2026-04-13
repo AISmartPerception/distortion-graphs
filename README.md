@@ -37,7 +37,7 @@ The core idea is to represent comparative image quality as a structured graph ov
 
 ## Data
 
-Download the dataset (~15GB) from: [Data](https://huggingface.co/datasets/kjanjua26/pandabench)
+Download the dataset (~15GB) from: [Hugging Face Link](https://huggingface.co/datasets/kjanjua26/pandabench)
 
 The default configuration expects the dataset under:
 
