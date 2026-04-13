@@ -13,7 +13,7 @@ from pandabench_idx import easy, medium
 
 class PandaBenchLoader(Dataset):
     """
-        The Distortion Graph dataset (DGBench) loading class for loading and processing image pairs with associated ground truth (GT) data. 
+        The Distortion Graph dataset loading class for loading and processing image pairs with associated ground truth (GT) data. 
         The dataset consists of image pairs, where each image pair represents an "anchor" image and a "target" image, along with a corresponding ground truth 
         that compares the quality and characteristics of the images.
 
@@ -295,7 +295,7 @@ def pad_masks(mask_list, max_height, max_width):
         padded_masks.append(torch.concat(masks))
     return torch.stack(padded_masks).squeeze(2)  # (B, R_n, H, W)
 
-def dgbench_train_collate_fn(batch, h, w):
+def pandabench_train_collate_fn(batch, h, w):
     """
     Processes a batch of images and returns a dict with various tensors, some are padded to maintain tensor shape.
     Returns:
@@ -354,7 +354,7 @@ def dgbench_train_collate_fn(batch, h, w):
         "region_mask_flags": region_mask_flags # (B*R_n, )
     }
 
-def dgbench_test_collate_fn(batch, h, w):
+def pandabench_test_collate_fn(batch, h, w):
     """
     Processes a batch of images of size 1 and returns a dict with various tensors, some are padded to maintain tensor shape.
     Returns:

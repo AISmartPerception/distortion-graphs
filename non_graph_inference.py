@@ -1,6 +1,6 @@
 import torch
 from pandadg import PandaDG
-from loaddata import PandaBenchLoader, dgbench_test_collate_fn
+from loaddata import PandaBenchLoader, pandabench_test_collate_fn
 from helper import loadconfig
 from torch.utils.data import DataLoader
 import argparse
@@ -192,16 +192,16 @@ def main():
     
     # read config and loggers
     config = loadconfig(args.configpath)
-    test_dgbench = PandaBenchLoader(config["general"]["datapath"],
+    test_pandabench = PandaBenchLoader(config["general"]["datapath"],
                                     config["general"]["stats"],
                                     config["general"]["resize_shape"],
                                     mode="test", 
                                     inf_option=config["inference"]["inf_mode"])
     h = w = config['general']['resize_shape']
-    test_dataloader = DataLoader(test_dgbench,
+    test_dataloader = DataLoader(test_pandabench,
                                  batch_size=1,
                                  shuffle=False,
-                                 collate_fn=partial(dgbench_test_collate_fn, h=h, w=w))
+                                 collate_fn=partial(pandabench_test_collate_fn, h=h, w=w))
     print(f"Total Images to Process: {len(test_dataloader)}")
     
     # load the model

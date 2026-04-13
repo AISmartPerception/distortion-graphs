@@ -3,7 +3,7 @@ import torch.nn as nn
 import logging, argparse, os, random, yaml, time
 import numpy as np
 from helper import MetricMonitor, loadconfig
-from loaddata import PandaBenchLoader, dgbench_train_collate_fn
+from loaddata import PandaBenchLoader, pandabench_train_collate_fn
 from torch.utils.data import DataLoader
 from pandadg import PandaDG
 from tqdm import tqdm
@@ -460,49 +460,49 @@ def evaluate(model, logger,
 
 def main(rank, world_size, 
          config, logger, writer):
-    train_dgbench = PandaBenchLoader(config["general"]["datapath"],
+    train_pandabench = PandaBenchLoader(config["general"]["datapath"],
                                      config["general"]["stats"],
                                      config['general']['resize_shape'],
                                      mode="train")
-    val_dgbench = PandaBenchLoader(config["general"]["datapath"],
+    val_pandabench = PandaBenchLoader(config["general"]["datapath"],
                                    config["general"]["stats"],
                                    config['general']['resize_shape'],
                                    mode="val") # val on entire PandaSet val set
-    test_dgbench = PandaBenchLoader(config["general"]["datapath"],
+    test_pandabench = PandaBenchLoader(config["general"]["datapath"],
                                     config["general"]["stats"],
                                     config['general']['resize_shape'],
                                     mode="test", inf_option="hard")
     h = w = config['general']['resize_shape']
 
-    train_sampler = DistributedSampler(train_dgbench,
+    train_sampler = DistributedSampler(train_pandabench,
                                        num_replicas=world_size,
                                        rank=rank,
                                        shuffle=True,
                                        drop_last=True)
-    train_dataloader = DataLoader(train_dgbench, batch_size=config["train"]["batch_size"],
+    train_dataloader = DataLoader(train_pandabench, batch_size=config["train"]["batch_size"],
                                   num_workers=config["train"]["num_workers"],
-                                  collate_fn=partial(dgbench_train_collate_fn, h=h, w=w),
+                                  collate_fn=partial(pandabench_train_collate_fn, h=h, w=w),
                                   sampler=train_sampler,
                                   pin_memory=True)
     train_prefetcher = CUDAPrefetcher(train_dataloader, rank)
 
-    val_sampler = DistributedSampler(val_dgbench,
+    val_sampler = DistributedSampler(val_pandabench,
                                      num_replicas=world_size,
                                      rank=rank)
-    val_dataloader = DataLoader(val_dgbench, batch_size=config["train"]["batch_size"],
+    val_dataloader = DataLoader(val_pandabench, batch_size=config["train"]["batch_size"],
                                 num_workers=config["train"]["num_workers"],
-                                collate_fn=partial(dgbench_train_collate_fn, h=h, w=w),
+                                collate_fn=partial(pandabench_train_collate_fn, h=h, w=w),
                                 sampler=val_sampler,
                                 pin_memory=True)
     val_prefetcher = CUDAPrefetcher(val_dataloader, rank)
     
-    test_sampler = DistributedSampler(test_dgbench,
+    test_sampler = DistributedSampler(test_pandabench,
                                       num_replicas=world_size,
                                       rank=rank)
-    test_dataloader = DataLoader(test_dgbench, batch_size=config["train"]["batch_size"],
+    test_dataloader = DataLoader(test_pandabench, batch_size=config["train"]["batch_size"],
                                  shuffle=False, 
                                  num_workers=config["train"]["num_workers"],
-                                 collate_fn=partial(dgbench_train_collate_fn, h=h, w=w),
+                                 collate_fn=partial(pandabench_train_collate_fn, h=h, w=w),
                                  sampler=test_sampler,
                                  pin_memory=True)
     test_prefetcher = CUDAPrefetcher(test_dataloader, rank)
