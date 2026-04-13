@@ -1,4 +1,4 @@
-# ✨ Panoptic Pairwise Distortion Graph [ICLR 2026] ✨
+# Panoptic Pairwise Distortion Graph ✨ [ICLR 2026] ✨
 
 Official codebase for **Panoptic Pairwise Distortion Graph**, accepted to **ICLR 2026**.
 <p align="center">
@@ -25,7 +25,7 @@ The core idea is to represent comparative image quality as a structured graph ov
 ├── config.yml                # Main experiment configuration
 ├── train.py                  # Distributed training + validation/testing
 ├── pandadg.py                # Model definition
-├── loaddata.py               # PandaBench / DGBench dataset loader + collate fns
+├── loaddata.py               # PandaBench dataset loader + collate fns
 ├── helper.py                 # Label maps, metrics helpers, utilities
 ├── non_graph_inference.py    # Standard evaluation script (acc/F1/SRCC/PLCC)
 ├── graph_inference.py        # Export predictions as distortion-graph JSON
