@@ -177,10 +177,26 @@ The plotting script reads a graph JSON file from `inf_graphs/`, builds a colored
 
 ---
 
+## Acknowledgement
+
+We thank the authors of following works for open-sourcing their work which allowed us to build PandaSet/PandaBench.
+
+- [DepictQA](https://github.com/XPixelGroup/DepictQA)
+- [OneRestore](https://github.com/gy65896/onerestore)
+- [Open-PSG](https://github.com/Jingkang50/OpenPSG)
+- [Seagull](https://github.com/chencn2020/SEAGULL)
+
+---
+
 ## Citation
 
 If you use this codebase in your research, please cite the Distortion Graph paper.
 
-```Coming Soon```
-
----
+```
+@inproceedings{janjua2026panoptic,
+  title={Panoptic Pairwise Distortion Graph},
+  author={Muhammad Kamran Janjua and Abdul Wahab and Bahador Rashidi},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2026}
+}
+```
